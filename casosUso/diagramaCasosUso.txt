@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Secretaria
+actor Profesor
+actor Estudiante
+
+rectangle "Sistema académico" {
+	Secretaria -- (Registrar profesor)
+	Secretaria -- (Registrar representante legal)
+	Secretaria -- (Registrar curso)
+	Secretaria -- (Registrar estudiante)
+	Secretaria -- (Registrar matrícula estudiante)
+	Secretaria -- (Lista de estudiantes)
+	Secretaria -- (Imprimir libreta de calificaciones)
+	(Registrar actividades) -- Profesor
+	(Registrar calificaciones) -- Profesor
+	(Consultar calificaciones) -- Estudiante
+}
+
+@enduml

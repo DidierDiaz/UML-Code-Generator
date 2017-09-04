@@ -1,0 +1,13 @@
+@startuml
+
+	autonumber
+
+	Profesor -> ProfesorMateria: seleccionarMateriaAsignada()
+	
+	ProfesorMateria -> Curso: buscarMateria()
+	
+	Curso -> CursoEstudiante: buscarEstudiantes(cursoId)
+	
+	CursoEstudiante -> Calificaciones: registrarCalificaciones(Profesor, listaEstudiantes[])
+	
+@enduml

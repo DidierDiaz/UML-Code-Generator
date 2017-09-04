@@ -1,0 +1,22 @@
+@startuml
+	
+	title Registrar actividad
+	hide footbox
+	autonumber
+
+	Profesor -> ProfesorMateria: seleccionarMateria(profesorId)
+	activate ProfesorMateria
+	
+	ProfesorMateria -> Materia: buscarMateria()
+	
+	Materia --> ProfesorMateria: materiaId
+	
+	ProfesorMateria --> Profesor: materiaId
+	
+	Profesor -> Actividad: seleccionarActividad()
+	
+	Actividad --> Profesor: actividadId
+	
+	Profesor -> ProfesorMateria: registrarActividad(materiaId, actividadId, fecha)
+
+@enduml

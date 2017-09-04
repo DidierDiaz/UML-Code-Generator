@@ -1,0 +1,111 @@
+@startuml
+
+class Persona{
+	identificacion
+	apellidos
+	nombre
+	direccion
+	telefono
+}
+
+class RepresentanteLegal{
+	codigo
+}
+
+class Estudiante{
+	matricula
+	estado
+}
+
+class Empleado{
+	codigo
+}
+
+class Profesor{
+}
+
+class Materia{
+}
+
+class TipoActividad{
+	descripcion
+	ponderacion
+}
+
+class Actividad{
+	fecha
+	descripcion
+}
+
+class ProfesorMateria{
+}
+
+class Seccion{
+}
+
+class Nivel{
+}
+
+class Aula{
+}
+
+class Curso{
+}
+
+class CursoEstudiante{
+}
+
+class Calificaciones{
+}
+
+class CalificacionesDetalle{
+}
+
+class AnioLectivo{
+}
+
+class PeriodoLectivo{
+}
+
+class Parcial{
+}
+
+class CicloAcademico{
+}
+
+AnioLectivo "1" -- "1" CicloAcademico
+PeriodoLectivo "1" -- "1" CicloAcademico
+Parcial "1" -- "1" CicloAcademico
+
+Curso "1..*" -- "1" Seccion
+Curso "1..*" -- "1" Nivel
+Curso "1" -- "1" Aula
+Curso "1..*" -- "1" ProfesorMateria
+Curso "1" -- "1..*" CursoEstudiante
+
+Estudiante "1..*" -- "1" Nivel
+Estudiante "1..*" --o "1..*" CursoEstudiante
+
+CalificacionesDetalle "1..*" -- "1" Calificaciones
+
+CalificacionesDetalle ..> Actividad
+CalificacionesDetalle ..> CursoEstudiante
+
+Curso "1..*" -- "1" CicloAcademico
+Calificaciones "1" -- "1" Curso
+Calificaciones ..> Empleado
+
+TipoActividad "1..*" -- "1" Actividad
+Actividad "1..*" --o "1..*" ProfesorMateria
+
+Profesor "1" -- "1" ProfesorMateria
+Materia "1" -- "1" ProfesorMateria
+
+Persona <|-- RepresentanteLegal
+Persona <|-- Estudiante
+RepresentanteLegal "1" -- "1..*" Estudiante
+
+Persona <|-- Empleado
+Empleado <|-- Profesor
+
+@enduml
