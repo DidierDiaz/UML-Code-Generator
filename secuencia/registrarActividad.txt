@@ -7,16 +7,19 @@
 	Profesor -> ProfesorMateria: seleccionarMateria(profesorId)
 	activate ProfesorMateria
 	
-	ProfesorMateria -> Materia: buscarMateria()
+	ProfesorMateria -> Materia: obtenerInformación(materiaId)
+	activate Materia
 	
-	Materia --> ProfesorMateria: materiaId
+	Materia --> ProfesorMateria: mostrarMateria()
+	deactivate Materia
 	
-	ProfesorMateria --> Profesor: materiaId
+	activate Actividad
+	loop hasta completar
+		ProfesorMateria -> Actividad: seleccionarActividad()
+		Actividad --> ProfesorMateria: mostrarActividad()
+	end
+	deactivate Actividad
 	
-	Profesor -> Actividad: seleccionarActividad()
+	ProfesorMateria -> ProfesorMateria: registrarActividad(profesorId, materiaId, fecha, actividades[])
 	
-	Actividad --> Profesor: actividadId
-	
-	Profesor -> ProfesorMateria: registrarActividad(materiaId, actividadId, fecha)
-
 @enduml
