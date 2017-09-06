@@ -1,0 +1,43 @@
+@startuml
+
+	object Profesor
+	object ProfesorMateria
+	object Materia
+	object Curso
+	object CursoEstudiante
+	object Estudiante
+	object Calificaciones
+	object CalificacionesDetalle
+	
+	Profesor -- ProfesorMateria: 1 --> listarMaterias()
+
+	ProfesorMateria -- ProfesorMateria: 2 --> buscarMateriasAsignadas()
+	
+	ProfesorMateria -- Materia: 3 --> obtenerInformación()
+	
+	Profesor -- Profesor: 4--> seleccionarMateria()
+	
+	Profesor -- ProfesorMateria: 5 --> buscarCursoAsignado()
+	
+	ProfesorMateria -- ProfesorMateria: 6 --> obtenerCursoAsignado()
+	
+	ProfesorMateria -- Curso: 7 --> obtenerInformacion()
+	
+	Profesor -- CursoEstudiante: 8 --> obtenerListaEstudiantes() 
+	
+	CursoEstudiante -- CursoEstudiante: 9 --> buscarEstudiantesAsignados()
+	
+	CursoEstudiante -- Estudiante: 10 --> obtenerInformación()
+	
+	Profesor -- ProfesorMateria: 11 --> listarActividades()
+	
+	ProfesorMateria -- ProfesorMateria: 12 --> buscarActividadesAsignadas()
+	
+	Profesor -- Calificaciones: 13 --> asignarCalificaciones()
+	
+	Calificaciones -- CalificacionesDetalle: 14 --> asignarCalificaciones()
+	
+	Calificaciones -- Calificaciones: 15 --> registrarCalificaciones()
+
+
+@enduml

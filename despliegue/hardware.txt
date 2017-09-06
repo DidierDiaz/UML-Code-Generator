@@ -1,0 +1,30 @@
+@startuml
+	title Diagrama de despliegue
+	
+	actor Usuario
+	
+	node Cliente{
+		component "Navegador Web" as WEB
+	}
+	Usuario <--> WEB: Monitor/teclado
+	
+	node "Servidor de \naplicaciones Web" as WebServer{
+	
+		component "Capa de presentación\n(interfaz web)" as P
+		component "Capa de base de datos" as DB
+		P <--> DB
+		
+		component "Bitácora \n(Archivo Log)" as LOG
+		DB --> LOG
+	}
+	
+	WEB <--> P: Conexión HTTP/HTTPS
+
+	node "Servidor de \nbase de datos" as DatabaseServer{
+	
+		component "Base de datos\nPostgreSQL" as PG
+		
+		DB <--> PG: Conexiónn TCP/IP o socket local
+	}
+	
+@enduml
