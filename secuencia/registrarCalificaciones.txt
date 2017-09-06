@@ -1,13 +1,72 @@
 @startuml
+	
+	title Registrar calificaciones
+	hide footbox
 
-	autonumber
-
-	Profesor -> ProfesorMateria: seleccionarMateriaAsignada()
+	Profesor -> ProfesorMateria: listarMaterias(ID profesor)
+	activate ProfesorMateria
 	
-	ProfesorMateria -> Curso: buscarMateria()
+	ProfesorMateria -> ProfesorMateria: materias[]:=\nbuscarMateriasAsignadas(ID profesor)
 	
-	Curso -> CursoEstudiante: buscarEstudiantes(cursoId)
+	activate Materia
+	loop hasta completar
+		ProfesorMateria -> Materia: obtenerInformación(materias[])
+		Materia --> ProfesorMateria: Información
+	end
+	deactivate Materia
+	destroy Materia
 	
-	CursoEstudiante -> Calificaciones: registrarCalificaciones(Profesor, listaEstudiantes[])
+	ProfesorMateria --> Profesor: listado de materias (materias[])
+	
+	Profesor -> Profesor: seleccionarMateria(materias[])
+	
+	Profesor -> ProfesorMateria: buscarCursoAsignado(ID profesor, ID materia)
+	
+	ProfesorMateria -> ProfesorMateria: curso:=obtenerCursoAsignado(ID profesor,\nID materia)
+	
+	activate Curso
+	ProfesorMateria -> Curso: obtenerInformacion(ID curso)
+	Curso --> ProfesorMateria: Información
+	destroy Curso
+	
+	ProfesorMateria --> Profesor: Curso asignado (curso)
+	
+	Profesor -> CursoEstudiante: obtenerListaEstudiantes(ID profesor, ID curso) 
+	
+	activate CursoEstudiante
+	CursoEstudiante -> CursoEstudiante: estudiantes[]:=\nbuscarEstudiantesAsignados(\nID profesor, ID curso) 
+	
+	activate Estudiante
+	loop hasta completar
+		CursoEstudiante -> Estudiante: obtenerInformación(estudiantes[])
+		Estudiante --> CursoEstudiante: Información
+	end
+	deactivate Estudiante
+	destroy Estudiante
+	
+	CursoEstudiante --> Profesor: listado de estudiantes (estudiantes[])
+	deactivate CursoEstudiante
+	destroy CursoEstudiante
+	
+	Profesor -> ProfesorMateria: listarActividades(ID profesor, ID materia, ID curso)
+	ProfesorMateria -> ProfesorMateria: actividades[]:=\nbuscarActividadesAsignadas\n(ID profesor, ID materia, ID curso)
+	ProfesorMateria --> Profesor: listado de actividades (actividades[])
+	
+	activate Calificaciones
+	Profesor -> Calificaciones: asignarCalificaciones(ID profesor, ID materia,\nID curso, actividades[], estudiantes[])
+	
+	activate CalificacionesDetalle
+	loop hasta completar
+		Calificaciones -> CalificacionesDetalle: asignarCalificaciones(actividades[], estudiantes[])
+		CalificacionesDetalle --> Calificaciones: OK
+	end	
+	
+	deactivate CalificacionesDetalle
+	destroy CalificacionesDetalle
+	Calificaciones -> Calificaciones: registrarCalificaciones(ID profesor, ID materia,\nID curso, actividades[], estudiantes[])
+	
+	Calificaciones --> Profesor: Calificaciones registradas
+	deactivate Calificaciones
+	destroy Calificaciones
 	
 @enduml

@@ -1,7 +1,7 @@
 @startuml
 
 class Persona{
-	identificacion
+	ID
 	apellidos
 	nombre
 	direccion
@@ -10,6 +10,7 @@ class Persona{
 
 class RepresentanteLegal{
 	codigo
+	estado
 }
 
 class Estudiante{
@@ -19,58 +20,104 @@ class Estudiante{
 
 class Empleado{
 	codigo
+	estado
 }
 
 class Profesor{
+	estado
+	listarMaterias(ID profesor)
+	seleccionarMateria(materias[])
+	buscarCursoAsignado(ID profesor, ID materia)
+	asignarActividades(ID profesor, ID materia, ID curso)
+	obtenerListaEstudiantes(ID profesor, ID curso)
+	asignarCalificaciones(ID profesor, ID materia, ID curso, \nactividades[], estudiantes[])
+	listarActividades(ID profesor, ID materia, ID curso)
 }
 
 class Materia{
+	ID
+	estado
 }
 
 class TipoActividad{
+	ID
 	descripcion
 	ponderacion
+	estado
 }
 
 class Actividad{
+	ID
 	fecha
 	descripcion
+	estado
 }
 
 class ProfesorMateria{
+	estado
+	buscarMateriasAsignadas(ID profesor)
+	obtenerInformación(materias[])
+	obtenerCursoAsignado(ID profesor, ID materia)
+	obtenerInformacion(ID curso)
+	seleccionarActividad(actividades[])
+	registrarActividad(ID profesor, ID materia, ID curso, actividades[], fecha)
+	buscarActividadesAsignadas(ID profesor, ID materia, ID curso)
 }
 
 class Seccion{
+	ID
+	estado
 }
 
 class Nivel{
+	ID
+	estado
 }
 
 class Aula{
+	ID
+	estado
 }
 
 class Curso{
+	ID
+	estado
 }
 
 class CursoEstudiante{
+	estado
+	buscarEstudiantesAsignados(ID profesor, ID curso)
+	obtenerInformación(estudiantes[])
 }
 
 class Calificaciones{
+	estado
+	asignarCalificaciones(actividades[], estudiantes[])
+	registrarCalificaciones(ID profesor, ID materia,\nID curso, actividades[], estudiantes[])
 }
 
 class CalificacionesDetalle{
+	estado
 }
 
 class AnioLectivo{
+	ID
+	estado
 }
 
 class PeriodoLectivo{
+	ID
+	estado
 }
 
 class Parcial{
+	ID
+	estado
 }
 
 class CicloAcademico{
+	ID
+	estado
 }
 
 AnioLectivo "1" -- "1" CicloAcademico

@@ -2,24 +2,53 @@
 	
 	title Registrar actividad
 	hide footbox
-	autonumber
+	' autonumber
 
-	Profesor -> ProfesorMateria: seleccionarMateria(profesorId)
+	Profesor -> ProfesorMateria: listarMaterias(ID profesor)
 	activate ProfesorMateria
 	
-	ProfesorMateria -> Materia: obtenerInformación(materiaId)
-	activate Materia
+	ProfesorMateria -> ProfesorMateria: materias[]:=buscarMateriasAsignadas(ID profesor)
 	
-	Materia --> ProfesorMateria: mostrarMateria()
+	activate Materia
+	loop hasta completar
+		ProfesorMateria -> Materia: obtenerInformación(materias[])
+		Materia --> ProfesorMateria: Información
+	end
 	deactivate Materia
+	destroy Materia
+	
+	ProfesorMateria --> Profesor: listado de materias (materias[])
+	
+	Profesor -> Profesor: seleccionarMateria(materias[])
+	
+	Profesor -> ProfesorMateria: buscarCursoAsignado(ID profesor, ID materia)
+	
+	ProfesorMateria -> ProfesorMateria: curso:=obtenerCursoAsignado(ID profesor, ID materia)
+	
+	activate Curso
+	ProfesorMateria -> Curso: obtenerInformacion(ID curso)
+	Curso --> ProfesorMateria: Información
+	destroy Curso
+	
+	ProfesorMateria --> Profesor: Curso asignado (curso)
+	
+	Profesor -> ProfesorMateria: asignarActividades(ID profesor, ID materia, ID curso)
+	
+	ProfesorMateria -> ProfesorMateria: actividades[]:{}
 	
 	activate Actividad
 	loop hasta completar
-		ProfesorMateria -> Actividad: seleccionarActividad()
-		Actividad --> ProfesorMateria: mostrarActividad()
+		ProfesorMateria -> Actividad: seleccionarActividad(actividades[])
+		Actividad --> ProfesorMateria: Información
 	end
 	deactivate Actividad
+	destroy Actividad
 	
-	ProfesorMateria -> ProfesorMateria: registrarActividad(profesorId, materiaId, fecha, actividades[])
+	ProfesorMateria -> ProfesorMateria: registrarActividad(ID profesor, ID materia, ID curso, actividades[], fecha)
+	
+	ProfesorMateria --> Profesor: Actividades registradas
+	deactivate ProfesorMateria
+	destroy ProfesorMateria
+	
 	
 @enduml
